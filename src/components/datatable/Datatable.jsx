@@ -14,7 +14,7 @@ const Datatable = ({columns, hotelId}) => {
   // Initialize list with an empty array
   const [list, setList] = useState([]);
   
-  const { data, loading, error } = useFetch(`https://backend-test-phi-one.vercel.app/api/${path}`);
+  const { data, loading, error } = useFetch(`/${path}`);
 
   useEffect(() => {
     if (data) {
@@ -25,9 +25,9 @@ const Datatable = ({columns, hotelId}) => {
   const handleDelete = async (id) => {
     try {
       if (path === "users" || path === "hotels") {
-        await axios.delete(`https://backend-test-phi-one.vercel.app/api/${path}/${id}`);
+        await axios.delete(`/${path}/${id}`);
       } else if (path === "rooms") {
-        await axios.delete(`https://backend-test-phi-one.vercel.app/api/${path}/${id}/${hotelId}`);
+        await axios.delete(`/${path}/${id}/${hotelId}`);
       }
       
       // Update the state to remove the deleted item
