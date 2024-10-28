@@ -12,9 +12,6 @@ export default function(app) {
         "*": "", // Rewrite the domain of the cookies to avoid issues
       },
       credentials: true, // Allow credentials (for cookies)
-      pathRewrite: {
-        '^/api': '', // Remove /api from the request URL
-      },
     })
   );
 }
