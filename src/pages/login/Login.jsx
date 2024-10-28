@@ -3,7 +3,6 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-// import { AuthContext } from "../../context/AuthContext";
 import "./login.scss";
 
 const Login = () => {
@@ -22,21 +21,19 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
-    // const API_URL = process.env.NODE_ENV === "production"
-    // ? "https://backend-test-phi-one.vercel.app/api/auth/login"
-    // : "http://localhost:8000/api/auth/login";
 
-  try {
-    const res = await axios.post('https://backend-test-phi-one.vercel.app/api/auth/login', credentials, {    
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
-    console.log("Full response data:", res.data); ; 
+    try {
+      const res = await axios.post('https://backend-test-phi-one.vercel.app/api/auth/login', credentials, {    
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
+
+      console.log("Full response data:", res.data);
+      
       if (res.data.isAdmin) {
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-
         navigate("/");
       } else {
         dispatch({
@@ -45,7 +42,13 @@ const Login = () => {
         });
       }
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response ? err.response.data : { message: "Network error" } });
+      // Here, we can handle different error messages based on the backend response
+      let errorMessage = "Network error";
+      if (err.response) {
+        // Customize the error message based on the server's response
+        errorMessage = err.response.data.error || err.response.data.message || "Login failed. Please try again.";
+      }
+      dispatch({ type: "LOGIN_FAILURE", payload: { message: errorMessage } });
     }
   };
 
