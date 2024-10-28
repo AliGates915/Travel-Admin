@@ -31,6 +31,7 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
     console.log("Full response data:", res.data); ; 
       if (res.data.isAdmin) {
