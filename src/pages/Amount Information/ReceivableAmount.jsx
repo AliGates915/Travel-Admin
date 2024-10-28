@@ -9,7 +9,7 @@ const ReceivableAmount = () => {
   // Fetch user data on component mount
   const fetchUser = async () => {
     try {
-      const response = await axios.get('/customizePackage'); // Assuming your route is prefixed with `/api`
+      const response = await axios.get('https://backend-test-phi-one.vercel.app/api/customizePackage'); // Assuming your route is prefixed with `/api`
       setUserData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);

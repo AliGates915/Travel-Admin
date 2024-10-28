@@ -13,7 +13,7 @@ function ServicesTypes() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get('/tours');
+      const response = await axios.get('https://backend-test-phi-one.vercel.app/api/tours');
       setTourTypes(response.data);
     } catch (error) {
       console.error('Error fetching tour types:', error);
@@ -27,7 +27,7 @@ function ServicesTypes() {
     }
 
     try {
-      const response = await axios.post('/tours', { tourName });
+      const response = await axios.post('https://backend-test-phi-one.vercel.app/api/tours', { tourName });
       setTourTypes([...tourTypes, response.data]);
       setTourName(''); // Clear the input after saving
     } catch (error) {
@@ -40,7 +40,7 @@ function ServicesTypes() {
     if (!updatedTourName) return;
 
     try {
-      const response = await axios.put(`/tours/${id}`, { tourName: updatedTourName });
+      const response = await axios.put(`https://backend-test-phi-one.vercel.app/api/tours/${id}`, { tourName: updatedTourName });
       setTourTypes(tourTypes.map(tour => (tour._id === id ? response.data : tour)));
     } catch (error) {
       console.error('Error updating tour type:', error);
@@ -51,7 +51,7 @@ function ServicesTypes() {
     if (!window.confirm('Are you sure you want to delete this tour?')) return;
 
     try {
-      await axios.delete(`/tours/${id}`);
+      await axios.delete(`https://backend-test-phi-one.vercel.app/api/tours/${id}`);
       setTourTypes(tourTypes.filter(tour => tour._id !== id));
     } catch (error) {
       console.error('Error deleting tour type:', error);

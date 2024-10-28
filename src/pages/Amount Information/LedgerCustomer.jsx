@@ -13,7 +13,7 @@ const CustomerLedger = () => {
   // Fetch user data on component mount
   const fetchUser = async () => {
     try {
-      const response = await axios.get('/customizePackage'); // Assuming your route is prefixed with `/api`
+      const response = await axios.get('https://backend-test-phi-one.vercel.app/api/customizePackage'); // Assuming your route is prefixed with `/api`
       // Format the date for each entry
       const formattedData = response.data.map(entry => ({
         ...entry,
