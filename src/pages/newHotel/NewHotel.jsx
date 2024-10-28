@@ -13,7 +13,7 @@ const NewHotel = () => {
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);
 
-  const { data, loading } = useFetch("https://backend-test-phi-one.vercel.app/api/rooms");
+  const { data, loading } = useFetch("/rooms");
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -53,7 +53,7 @@ const NewHotel = () => {
         photos: list,
       };
 
-      await axios.post("https://backend-test-phi-one.vercel.app/api/hotels", newhotel);
+      await axios.post("/hotels", newhotel);
     } catch (err) {console.log(err)}
   };
   return (
