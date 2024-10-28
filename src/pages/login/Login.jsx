@@ -22,13 +22,17 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
-    try {
-      const res = await axios.post("/auth/login", credentials, {     
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const API_URL = process.env.NODE_ENV === "production"
+    ? "https://backend-test-phi-one.vercel.app/api/auth/login"
+    : "http://localhost:8000/api/auth/login";
+
+  try {
+    const res = await axios.post(API_URL, credentials, {     
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-      console.log("Full response data:", res.data); 
+    console.log("Full response data:", res.data); ; 
       if (res.data.isAdmin) {
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
 
@@ -40,7 +44,7 @@ const Login = () => {
         });
       }
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response ? err.response.data : { message: "Network error" } });
     }
   };
 
