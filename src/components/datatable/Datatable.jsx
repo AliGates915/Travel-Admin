@@ -74,7 +74,7 @@ const Datatable = ({columns, hotelId}) => {
     <div className="datatable">
       <div className="datatableTitle">
        All {path}
-        <Link to={`/${path}/new`} className="link">
+        <Link to={`https://backend-test-phi-one.vercel.app/api/${path}/new`} className="link">
           Add New User
         </Link>
       </div>
