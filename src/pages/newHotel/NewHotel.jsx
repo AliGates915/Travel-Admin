@@ -3,17 +3,31 @@ import "./newHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { hotelInputs } from "../../formSource";
-import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
 const NewHotel = () => {
   const [files, setFiles] = useState("");
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data, loading } = useFetch("/rooms");
+  // Fetch rooms data using Axios
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get("https://backend-test-phi-one.vercel.app/api/rooms");
+        setRooms(response.data);
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRooms();
+  }, []);
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -26,8 +40,8 @@ const NewHotel = () => {
     );
     setRooms(value);
   };
-  
-  console.log(files)
+
+  console.log(files);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -53,9 +67,12 @@ const NewHotel = () => {
         photos: list,
       };
 
-      await axios.post("/hotels", newhotel);
-    } catch (err) {console.log(err)}
+      await axios.post("https://backend-test-phi-one.vercel.app/api/hotels", newhotel);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className="new">
       <Sidebar />
@@ -112,11 +129,10 @@ const NewHotel = () => {
                 <label>Rooms</label>
                 <select id="rooms" multiple onChange={handleSelect}>
                   {loading
-                    ? "loading"
-                    : data &&
-                      data.map((room) => (
+                    ? "Loading..."
+                    : rooms.map((room) => (
                         <option key={room._id} value={room._id}>
-                          {room.title} 
+                          {room.title}
                         </option>
                       ))}
                 </select>
