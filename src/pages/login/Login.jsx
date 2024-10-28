@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("https://backend-test-phi-one.vercel.app/api/auth/login", credentials, {     
+      const res = await axios.post("/auth/login", credentials, {     
         headers: {
           'Content-Type': 'application/json',
         },

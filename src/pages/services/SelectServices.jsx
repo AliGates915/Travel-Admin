@@ -49,7 +49,7 @@ function SelectServices() {
     };
 
     // Axios request to backend (assuming POST request)
-    axios.post('https://backend-test-phi-one.vercel.app/api/facility', data)
+    axios.post('/facility', data)
       .then(response => {
         console.log('Data sent successfully:', response.data);
         setTooltipVisible(true); // Show tooltip on successful save

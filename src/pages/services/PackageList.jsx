@@ -62,7 +62,7 @@ function PackageList() {
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get("https://backend-test-phi-one.vercel.app/api/packages");
+      const response = await axios.get("/packages");
       setPackages(response.data);
       console.log("Fetched packages:", response.data);
     } catch (error) {
@@ -72,7 +72,7 @@ function PackageList() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get("https://backend-test-phi-one.vercel.app/api/tours");
+      const response = await axios.get("/tours");
       setTourTypes(response.data);
       console.log("Fetched tour types:", response.data);
     } catch (error) {
@@ -82,7 +82,7 @@ function PackageList() {
 
   const fetchFacilities = async () => {
     try {
-      const response = await axios.get("https://backend-test-phi-one.vercel.app/api/facility");
+      const response = await axios.get("/facility");
       setFacilities(response.data);
       console.log("Fetched facilities:", response.data);
     } catch (error) {
@@ -107,7 +107,7 @@ function PackageList() {
     console.log("Submitting data:", postData); // Added logging
 
     try {
-      const response = await axios.post("https://backend-test-phi-one.vercel.app/api/packageList", postData);
+      const response = await axios.post("/packageList", postData);
       if (response.status === 201) {
         alert("Data submitted successfully!");
       }

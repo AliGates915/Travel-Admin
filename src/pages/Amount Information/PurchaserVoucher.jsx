@@ -60,7 +60,7 @@ function PaymentVoucher() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get("https://backend-test-phi-one.vercel.app/api/users");
+            const response = await axios.get("/users");
             setUser(response.data);
             console.log("Fetched packages:", response.data);
         } catch (error) {
@@ -99,7 +99,7 @@ function PaymentVoucher() {
         console.log("Submitting data:", postData); // Added logging
 
         try {
-            const response = await axios.post("https://backend-test-phi-one.vercel.app/api/voucher", postData);
+            const response = await axios.post("/voucher", postData);
             if (response.status === 201) {
                 alert("Data submitted successfully!");
             }

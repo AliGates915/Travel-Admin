@@ -37,7 +37,7 @@ const New = ({ inputs, title }) => {
         img: url,
       };
 
-      await axios.post("https://backend-test-phi-one.vercel.app/api/auth/register", newUser);
+      await axios.post("/auth/register", newUser);
     } catch (err) {
       console.log(err);
     }

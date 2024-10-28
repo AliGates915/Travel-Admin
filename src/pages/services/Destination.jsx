@@ -14,7 +14,7 @@ function Designation() {
 
   const fetchDestinations = async () => {
     try {
-      const response = await axios.get("https://backend-test-phi-one.vercel.app/api/destination");
+      const response = await axios.get("/destination");
       console.log("Fetched designations:", response.data);
       setDestinations(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ function Designation() {
     console.log("Data to send to backend:", dataToSend);
 
     try {
-      const response = await axios.post("https://backend-test-phi-one.vercel.app/api/destination", dataToSend);
+      const response = await axios.post("/destination", dataToSend);
       console.log("Saved facility response:", response.data);
       setDestinations([...destinations, response.data]);
       setCountry("");
@@ -55,7 +55,7 @@ function Designation() {
     if (!updatedDesignationName) return;
 
     try {
-      const response = await axios.put(`https://backend-test-phi-one.vercel.app/api/destination/${id}`, {
+      const response = await axios.put(`/destination/${id}`, {
         destinationName: updatedDesignationName,
       });
       setDestinations(
@@ -78,7 +78,7 @@ function Designation() {
       return;
 
     try {
-      await axios.delete(`https://backend-test-phi-one.vercel.app/api/destination/${id}`);
+      await axios.delete(`/destination/${id}`);
       setDestinations(
         destinations.filter((destination) => destination._id !== id)
       );
