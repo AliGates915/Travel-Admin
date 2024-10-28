@@ -7,7 +7,7 @@ function PackagesTypes() {
   const [packageName, setPackageName] = useState("");
   const [packageTypes, setPackageTypes] = useState([]);
  
-
+  const apiUrl = process.env.REACT_APP_API;
   const handleSave = async () => {
     if (!packageName) {
       alert("Please fill in all fields.");
@@ -20,7 +20,7 @@ function PackagesTypes() {
     // console.log("Data to send to backend:", dataToSend);
   
     try {
-      const response = await axios.post("/packages", dataToSend);
+      const response = await axios.post(`${apiUrl}/packages`, dataToSend);
       // console.log("Saved packages response:", response.data);
       // Check if response.data is a valid package object before updating state
       if (response.data && response.data._id) {
@@ -44,7 +44,7 @@ function PackagesTypes() {
 
   const fetchPackageTypes = async () => {
     try {
-      const response = await axios.get("/packages");
+      const response = await axios.get(`${apiUrl}/packages`);
       setPackageTypes(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching packages types:", error);
@@ -56,7 +56,7 @@ function PackagesTypes() {
     if (!updatedPackageName) return;
   
     try {
-      const response = await axios.put(`/packages/${id}`, {
+      const response = await axios.put(`${apiUrl}/packages/${id}`, {
         packageName: updatedPackageName,
       });
       // Only update the state if response contains updated package data

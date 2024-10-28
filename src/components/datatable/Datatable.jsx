@@ -1,64 +1,73 @@
 /* eslint-disable react/react-in-jsx-scope */
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useFetch from '../../hooks/useFetch';
 import axios from "axios";
 
-const Datatable = ({columns, hotelId}) => {
+const Datatable = ({ columns, hotelId }) => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
-  
-  // Initialize list with an empty array
+
   const [list, setList] = useState([]);
-  
-  const { data, loading, error } = useFetch(`/${path}`);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const apiUrl = process.env.REACT_APP_API;
 
   useEffect(() => {
-    if (data) {
-      setList(data);
-    }
-  }, [data]);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Log the API URL for debugging
+        console.log("Fetching data from:", `${apiUrl}/${path}`);
+        
+        const res = await axios.get(`${apiUrl}/${path}`);
+        setList(res.data);
+      } catch (err) {
+        // Log the error details
+        console.error("Error fetching data:", err.response ? err.response.data : err.message);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [apiUrl, path]);
 
   const handleDelete = async (id) => {
     try {
-      if (path === "users" || path === "hotels") {
-        await axios.delete(`/${path}/${id}`);
-      } else if (path === "rooms") {
-        await axios.delete(`/${path}/${id}/${hotelId}`);
-      }
-      
+      const url =
+        path === "rooms"
+          ? `${apiUrl}/${path}/${id}/${hotelId}`
+          : `${apiUrl}/${path}/${id}`;
+      await axios.delete(url);
+
       // Update the state to remove the deleted item
       setList(list.filter((item) => item._id !== id));
       alert("Delete successful");
     } catch (err) {
-      console.error("Error deleting item:", err);
+      console.error("Error deleting item:", err.response ? err.response.data : err.message);
     }
   };
-
 
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
       width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              Delete
-            </div>
+      renderCell: (params) => (
+        <div className="cellAction">
+          <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <div className="viewButton">View</div>
+          </Link>
+          <div
+            className="deleteButton"
+            onClick={() => handleDelete(params.row._id)}
+          >
+            Delete
           </div>
-        );
-      },
+        </div>
+      ),
     },
   ];
 
@@ -67,25 +76,25 @@ const Datatable = ({columns, hotelId}) => {
   }
 
   if (error) {
-    return <div>Error loading data</div>;
+    return <div>Error loading data. Please try again later.</div>;
   }
 
   return (
     <div className="datatable">
       <div className="datatableTitle">
-       All {path}
+        All {path}
         <Link to={`/${path}/new`} className="link">
           Add New User
         </Link>
       </div>
       <DataGrid
         className="datagrid"
-        rows={list}  // Use list which is now guaranteed to be an array
+        rows={list}
         columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
-        getRowId={row => row._id}
+        getRowId={(row) => row._id}
       />
     </div>
   );

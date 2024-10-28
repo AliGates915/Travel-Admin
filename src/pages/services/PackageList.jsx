@@ -26,11 +26,12 @@ function PackageList() {
   const tourDropdownRef = useRef(null);
   const facilitiesDropdownRef = useRef(null);
 
+  const apiUrl = process.env.REACT_APP_API;
   useEffect(() => {
     fetchPackages();
     fetchTourTypes();
     fetchFacilities();
-
+    
     // Event listener for outside click
     const handleClickOutside = (event) => {
       if (
@@ -62,7 +63,7 @@ function PackageList() {
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get("/packages");
+      const response = await axios.get(`${apiUrl}/packages`);
       setPackages(response.data);
       console.log("Fetched packages:", response.data);
     } catch (error) {
@@ -72,7 +73,7 @@ function PackageList() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get("/tours");
+      const response = await axios.get(`${apiUrl}/tours`);
       setTourTypes(response.data);
       console.log("Fetched tour types:", response.data);
     } catch (error) {
@@ -82,7 +83,7 @@ function PackageList() {
 
   const fetchFacilities = async () => {
     try {
-      const response = await axios.get("/facility");
+      const response = await axios.get(`${apiUrl}/facility`);
       setFacilities(response.data);
       console.log("Fetched facilities:", response.data);
     } catch (error) {
@@ -107,7 +108,7 @@ function PackageList() {
     console.log("Submitting data:", postData); // Added logging
 
     try {
-      const response = await axios.post("/packageList", postData);
+      const response = await axios.post(`${apiUrl}/packageList`, postData);
       if (response.status === 201) {
         alert("Data submitted successfully!");
       }

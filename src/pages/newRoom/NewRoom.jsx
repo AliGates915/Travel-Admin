@@ -2,17 +2,33 @@
 import "./newRoom.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { roomInputs } from "../../formSource";
-import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
 const NewRoom = () => {
   const [info, setInfo] = useState({});
   const [hotelId, setHotelId] = useState(undefined);
   const [rooms, setRooms] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data, loading } = useFetch("/hotels");
+  const apiUrl = process.env.REACT_APP_API;
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`${apiUrl}/hotels`);
+        setData(res.data);
+      } catch (err) {
+        console.error("Error fetching hotels:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHotels();
+  }, [apiUrl]);
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -27,11 +43,12 @@ const NewRoom = () => {
       return;
     }
     
-    const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
+    const roomNumbers = rooms.split(",").map((room) => ({ number: room.trim() }));
     try {
-      await axios.post(`/rooms/${hotelId}`, { ...info, roomNumbers });
+      await axios.post(`${apiUrl}/rooms/${hotelId}`, { ...info, roomNumbers });
+      alert("Room added successfully");
     } catch (err) {
-      console.log(err);
+      console.error("Error adding room:", err);
     }
   };
 

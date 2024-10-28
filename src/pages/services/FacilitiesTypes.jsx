@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
@@ -9,7 +10,7 @@ function FacilitiesTypes() {
   const [selectedTourType, setSelectedTourType] = useState("");
 
   const dropdownRef = useRef(null); // Ref for the dropdown
-
+  
   // Toggle function for dropdown
   const toggleTourTypeDropdown = () => {
     setIsTourTypeDropdownOpen((prev) => !prev);
@@ -18,7 +19,7 @@ function FacilitiesTypes() {
   const closeDropdowns = () => {
     setIsTourTypeDropdownOpen(false);
   };
-
+  const apiUrl = process.env.REACT_APP_API;
   useEffect(() => {
     fetchTourTypes();
     fetchFacilityTypes();
@@ -39,7 +40,7 @@ function FacilitiesTypes() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get("/tours"); // Adjust the endpoint as necessary
+      const response = await axios.get(`${apiUrl}/tours`); // Adjust the endpoint as necessary
       setTourTypes(response.data);
       console.log("Fetched tour types:", response.data);
     } catch (error) {
@@ -50,7 +51,7 @@ function FacilitiesTypes() {
 
   const fetchFacilityTypes = async () => {
     try {
-      const response = await axios.get("/facility");
+      const response = await axios.get(`${apiUrl}/facility`);
       console.log("Fetched facility types:", response.data);
       setFacilityTypes(response.data); // Make sure response.data is an array
     } catch (error) {
@@ -78,7 +79,7 @@ function FacilitiesTypes() {
     console.log("Data to send to backend:", dataToSend);
 
     try {
-      const response = await axios.post("/facility", dataToSend); // Adjust the endpoint as necessary
+      const response = await axios.post(`${apiUrl}/facility`, dataToSend); // Adjust the endpoint as necessary
       console.log("Saved facility response:", response.data);
       setFacilityTypes([...facilityTypes, response.data]); // Update facilityTypes
       setFacilityName("");
@@ -93,7 +94,7 @@ function FacilitiesTypes() {
     if (!updatedFacilityName) return;
 
     try {
-      const response = await axios.put(`/facility/${id}`, {
+      const response = await axios.put(`${apiUrl}/facility/${id}`, {
         facilityName: updatedFacilityName,
       });
       setFacilityTypes(

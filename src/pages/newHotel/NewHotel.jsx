@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
 import "./newHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -13,11 +14,13 @@ const NewHotel = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const apiUrl = process.env.REACT_APP_API;
+
   // Fetch rooms data using Axios
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("https://backend-test-phi-one.vercel.app/api/rooms");
+        const response = await axios.get(`${apiUrl}/${rooms}`);
         setRooms(response.data);
       } catch (error) {
         console.error("Error fetching rooms:", error);
@@ -27,6 +30,7 @@ const NewHotel = () => {
     };
 
     fetchRooms();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
@@ -67,7 +71,7 @@ const NewHotel = () => {
         photos: list,
       };
 
-      await axios.post("https://backend-test-phi-one.vercel.app/api/hotels", newhotel);
+      await axios.post(`${apiUrl}/${hotels}`, newhotel);
     } catch (err) {
       console.log(err);
     }

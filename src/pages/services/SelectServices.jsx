@@ -10,7 +10,7 @@ function SelectServices() {
   const [isOpenServiceType, setIsOpenServiceType] = useState(false);
   // const [isOpenService, setIsOpenService] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
-
+  const apiUrl = process.env.REACT_APP_API;
   const services = [
     'Web Development',
     'Mobile App Development',
@@ -49,7 +49,7 @@ function SelectServices() {
     };
 
     // Axios request to backend (assuming POST request)
-    axios.post('/facility', data)
+    axios.post(`${apiUrl}/facility`, data)
       .then(response => {
         console.log('Data sent successfully:', response.data);
         setTooltipVisible(true); // Show tooltip on successful save

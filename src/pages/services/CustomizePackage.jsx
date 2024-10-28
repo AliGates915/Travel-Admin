@@ -58,7 +58,7 @@ const CustomizePackage = () => {
   const userDropdownRef = useRef(null);
   const destinationsDropdownRef = useRef(null);
   const countryDropdownRef = useRef(null);
-
+  const apiUrl = process.env.REACT_APP_API;
   useEffect(() => {
     fetchTourTypes();
     fetchFacilities();
@@ -119,7 +119,7 @@ const CustomizePackage = () => {
   //fetching Data
   const fetchUser = async () => {
     try {
-      const response = await axios.get("/users");
+      const response = await axios.get(`${apiUrl}/users`);
       setUser(response.data);
       console.log("Fetched Users:", response.data);
       // Extract unique country names
@@ -130,7 +130,7 @@ const CustomizePackage = () => {
   };
   const fetchDestinations = async () => {
     try {
-      const response = await axios.get("/destination");
+      const response = await axios.get(`${apiUrl}/destination`);
       if (response.data) {
         console.log("Fetched designations:", response.data);
         setDestinations(response.data);
@@ -146,7 +146,7 @@ const CustomizePackage = () => {
   console.log("filteredDestinations ", filteredDestinations )
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get("/tours");
+      const response = await axios.get(`${apiUrl}/tours`);
       if (response.data) {
         setTourTypes(response.data);
         console.log("Fetched tour types:", response.data);
@@ -159,7 +159,7 @@ const CustomizePackage = () => {
 
   const fetchFacilities = async () => {
     try {
-      const response = await axios.get("/facility");
+      const response = await axios.get(`${apiUrl}/facility`);
       setFacilities(response.data);
       console.log("Fetched facilities:", response.data);
     } catch (error) {
@@ -218,7 +218,7 @@ const CustomizePackage = () => {
     console.log("Submitting data:", postData); // Added logging
 
     try {
-      const response = await axios.post("/customizePackage", postData);
+      const response = await axios.post(`${apiUrl}/customizePackage`, postData);
       if (response.status === 200) {
         alert("Data submitted successfully!");
       }
