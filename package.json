@@ -2,6 +2,7 @@
   "name": "aliadmin",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://backend-test-phi-one.vercel.app/api",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
@@ -13,7 +14,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
-    "http-proxy-middleware": "^3.0.3",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.0.4",
     "react-dom": "^17.0.2",
@@ -27,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
+    
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.x.x",
@@ -34,19 +35,19 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:react/recommended"
-    ],
-    "plugins": [
-      "react"
-    ],
-    "rules": {
-      "react/prop-types": "off"
-    }
-  },
+ "eslintConfig": {
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:react/recommended" 
+  ],
+  "plugins": [
+    "react" 
+  ],
+  "rules": {
+    "react/prop-types": "off" 
+  }
+},
   "browserslist": {
     "production": [
       ">0.2%",
