@@ -22,12 +22,12 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
-    // const API_URL = process.env.NODE_ENV === "production"
-    // ? "https://backend-test-phi-one.vercel.app/api/auth/login"
-    // : "http://localhost:8000/api/auth/login";
+    const API_URL = process.env.NODE_ENV === "production"
+    ? "https://backend-test-phi-one.vercel.app/api/auth/login"
+    : "http://localhost:8000/api/auth/login";
 
   try {
-    const res = await axios.post("/auth/login", credentials, {    
+    const res = await axios.post(API_URL, credentials, {    
       headers: {
         'Content-Type': 'application/json',
       },
