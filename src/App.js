@@ -173,6 +173,17 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="flight"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Flight />
+                  </Layout>
+                </ProtectedRoute>
+              }
+              
+            />
              {/* amount information */}
              <Route
               path="payable-info"
