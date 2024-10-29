@@ -119,7 +119,7 @@ const CustomizePackage = () => {
   //fetching Data
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/users`);
+      const response = await axios.get(`https://backend-test-phi-one.vercel.app/api/users`);
       setUser(response.data);
       console.log("Fetched Users:", response.data);
       // Extract unique country names
