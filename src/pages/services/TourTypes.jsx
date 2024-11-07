@@ -15,7 +15,7 @@ function TourTypes() {
       return;
     }
     try {
-      const response = await axios.post(`${apiUrl}/tours`, { tourName });
+      const response = await axios.post(`${process.env.REACT_APP_API}/tours`, { tourName });
       
       if (response.data) {
         setTourTypes((prevTourTypes) => [...prevTourTypes, response.data]);
@@ -34,7 +34,7 @@ function TourTypes() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/tours`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/tours`);
       setTourTypes(response.data);
     } catch (error) {
       console.error('Error fetching tour types:', error);
@@ -66,7 +66,7 @@ function TourTypes() {
     if (!window.confirm('Are you sure you want to delete this tour?')) return;
 
     try {
-      await axios.delete(`/tours/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API}/tours/${id}`);
       setTourTypes(tourTypes.filter(tour => tour._id !== id));
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -19,7 +19,7 @@ const NewRoom = () => {
     const fetchHotels = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${apiUrl}/hotels`);
+        const res = await axios.get(`${process.env.REACT_APP_API}/hotels`);
         setData(res.data);
       } catch (err) {
         console.error("Error fetching hotels:", err);
@@ -45,7 +45,7 @@ const NewRoom = () => {
     
     const roomNumbers = rooms.split(",").map((room) => ({ number: room.trim() }));
     try {
-      await axios.post(`${apiUrl}/rooms/${hotelId}`, { ...info, roomNumbers });
+      await axios.post(`${process.env.REACT_APP_API}/rooms/${hotelId}`, { ...info, roomNumbers });
       alert("Room added successfully");
     } catch (err) {
       console.error("Error adding room:", err);

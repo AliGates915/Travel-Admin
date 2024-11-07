@@ -59,11 +59,12 @@ function PackageList() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/packages`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/packages`);
       setPackages(response.data);
       console.log("Fetched packages:", response.data);
     } catch (error) {
@@ -73,7 +74,7 @@ function PackageList() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/tours`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/tours`);
       setTourTypes(response.data);
       console.log("Fetched tour types:", response.data);
     } catch (error) {
@@ -83,7 +84,7 @@ function PackageList() {
 
   const fetchFacilities = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/facility`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/facility`);
       setFacilities(response.data);
       console.log("Fetched facilities:", response.data);
     } catch (error) {
@@ -108,7 +109,7 @@ function PackageList() {
     console.log("Submitting data:", postData); // Added logging
 
     try {
-      const response = await axios.post(`${apiUrl}/packageList`, postData);
+      const response = await axios.post(`${process.env.REACT_APP_API}/packageList`, postData);
       if (response.status === 201) {
         alert("Data submitted successfully!");
       }

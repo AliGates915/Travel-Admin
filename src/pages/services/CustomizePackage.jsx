@@ -116,12 +116,14 @@ const CustomizePackage = () => {
     };
   }, []);
 
-  //fetching Data
+  //fetching Data 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`https://backend-test-phi-one.vercel.app/api/users`);
+      const response = await axios.get('/users');
+      if(response.data){
       setUser(response.data);
       console.log("Fetched Users:", response.data);
+      }
       // Extract unique country names
       setUser(response.data);
     } catch (error) {
@@ -143,7 +145,7 @@ const CustomizePackage = () => {
   const filteredDestinations = selectCountry
   ? destinations.filter(destination => destination.countryName === selectCountry)
   : [];
-  console.log("filteredDestinations ", filteredDestinations )
+  // console.log("filteredDestinations ", filteredDestinations )
   const fetchTourTypes = async () => {
     try {
       const response = await axios.get(`${apiUrl}/tours`);

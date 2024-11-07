@@ -5,10 +5,8 @@ import axios from 'axios';
 function SelectServices() {
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [selectedServiceType, setSelectedServiceType] = useState('');
-  // const [selectedAuditor, setSelectedAuditor] = useState('');
   const [isOpenCustomer, setIsOpenCustomer] = useState(false);
   const [isOpenServiceType, setIsOpenServiceType] = useState(false);
-  // const [isOpenService, setIsOpenService] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const apiUrl = process.env.REACT_APP_API;
   const services = [
@@ -22,20 +20,17 @@ function SelectServices() {
   const toggleCustomerDropdown = () => {
     setIsOpenCustomer(!isOpenCustomer);
     setIsOpenServiceType(false);
-    // setIsOpenService(false);
   };
 
   const toggleServiceTypeDropdown = () => {
     setIsOpenServiceType(!isOpenServiceType);
     setIsOpenCustomer(false);
-    // setIsOpenService(false);
   };
 
 
   const closeDropdown = (setIsOpen) => setIsOpen(false);
 
   const handleSave = () => {
-    // Validation: Check if any field is empty
     if (!selectedCustomer || !selectedServiceType ) {
       alert('Please fill out all fields before saving.');
       return; // Prevent navigation if validation fails
@@ -49,7 +44,7 @@ function SelectServices() {
     };
 
     // Axios request to backend (assuming POST request)
-    axios.post(`${apiUrl}/facility`, data)
+    axios.post(`${process.env.REACT_APP_API}/facility`, data)
       .then(response => {
         console.log('Data sent successfully:', response.data);
         setTooltipVisible(true); // Show tooltip on successful save

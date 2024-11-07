@@ -99,7 +99,7 @@ function PaymentVoucher() {
         console.log("Submitting data:", postData); // Added logging
 
         try {
-            const response = await axios.post("https://backend-test-phi-one.vercel.app/api/voucher", postData);
+            const response = await axios.post(`${process.env.REACT_APP_API}/voucher`, postData);
             if (response.status === 201) {
                 alert("Data submitted successfully!");
             }

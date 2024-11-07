@@ -20,7 +20,7 @@ const NewHotel = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/${rooms}`);
+        const response = await axios.get(`${process.env.REACT_APP_API}/{rooms}`);
         setRooms(response.data);
       } catch (error) {
         console.error("Error fetching rooms:", error);
@@ -71,7 +71,7 @@ const NewHotel = () => {
         photos: list,
       };
 
-      await axios.post(`${apiUrl}/${hotels}`, newhotel);
+      await axios.post(`${process.env.REACT_APP_API}/{hotels}`, newhotel);
     } catch (err) {
       console.log(err);
     }

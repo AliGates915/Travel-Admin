@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
@@ -14,7 +15,7 @@ function Designation() {
   const apiUrl = process.env.REACT_APP_API;
   const fetchDestinations = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/destination`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/destination`);
       console.log("Fetched designations:", response.data);
       setDestinations(response.data);
     } catch (error) {
@@ -36,7 +37,7 @@ function Designation() {
     console.log("Data to send to backend:", dataToSend);
 
     try {
-      const response = await axios.post(`${apiUrl}/destination`, dataToSend);
+      const response = await axios.post(`${process.env.REACT_APP_API}/destination`, dataToSend);
       console.log("Saved facility response:", response.data);
       setDestinations([...destinations, response.data]);
       setCountry("");
@@ -55,7 +56,7 @@ function Designation() {
     if (!updatedDesignationName) return;
 
     try {
-      const response = await axios.put(`${apiUrl}/destination/${id}`, {
+      const response = await axios.put(`${process.env.REACT_APP_API}/destination/${id}`, {
         destinationName: updatedDesignationName,
       });
       setDestinations(
@@ -78,7 +79,7 @@ function Designation() {
       return;
 
     try {
-      await axios.delete(`${apiUrl}/destination/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API}/destination/${id}`);
       setDestinations(
         destinations.filter((destination) => destination._id !== id)
       );

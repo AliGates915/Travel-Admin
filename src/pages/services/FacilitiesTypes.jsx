@@ -40,7 +40,7 @@ function FacilitiesTypes() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/tours`); // Adjust the endpoint as necessary
+      const response = await axios.get(`${process.env.REACT_APP_API}/tours`); // Adjust the endpoint as necessary
       setTourTypes(response.data);
       console.log("Fetched tour types:", response.data);
     } catch (error) {
@@ -51,7 +51,7 @@ function FacilitiesTypes() {
 
   const fetchFacilityTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/facility`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/facility`);
       console.log("Fetched facility types:", response.data);
       setFacilityTypes(response.data); // Make sure response.data is an array
     } catch (error) {
@@ -79,7 +79,7 @@ function FacilitiesTypes() {
     console.log("Data to send to backend:", dataToSend);
 
     try {
-      const response = await axios.post(`${apiUrl}/facility`, dataToSend); // Adjust the endpoint as necessary
+      const response = await axios.post(`${process.env.REACT_APP_API}/facility`, dataToSend); // Adjust the endpoint as necessary
       console.log("Saved facility response:", response.data);
       setFacilityTypes([...facilityTypes, response.data]); // Update facilityTypes
       setFacilityName("");
@@ -94,7 +94,7 @@ function FacilitiesTypes() {
     if (!updatedFacilityName) return;
 
     try {
-      const response = await axios.put(`${apiUrl}/facility/${id}`, {
+      const response = await axios.put(`${process.env.REACT_APP_API}/facility/${id}`, {
         facilityName: updatedFacilityName,
       });
       setFacilityTypes(
@@ -122,7 +122,7 @@ function FacilitiesTypes() {
       return;
 
     try {
-      await axios.delete(`/facility/${id}`); // Adjust the endpoint as necessary
+      await axios.delete(`${process.env.REACT_APP_API}/facility/${id}`); // Adjust the endpoint as necessary
       setFacilityTypes(facilityTypes.filter((facility) => facility._id !== id));
     } catch (error) {
       if (error.response && error.response.status === 401) {

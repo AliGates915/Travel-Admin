@@ -7,8 +7,6 @@ function ServicesTypes() {
   const [tourName, setTourName] = useState('');
   const [tourTypes, setTourTypes] = useState([]);
 
-  const apiUrl = process.env.REACT_APP_API;
-
   // Fetch all tour types when the component mounts
   useEffect(() => {
     fetchTourTypes();
@@ -16,7 +14,7 @@ function ServicesTypes() {
 
   const fetchTourTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/tours`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/tours`);
       setTourTypes(response.data);
     } catch (error) {
       console.error('Error fetching tour types:', error);
@@ -30,7 +28,7 @@ function ServicesTypes() {
     }
 
     try {
-      const response = await axios.post(`${apiUrl}/tours`, { tourName });
+      const response = await axios.post(`${process.env.REACT_APP_API}/tours`, { tourName });
       setTourTypes([...tourTypes, response.data]);
       setTourName(''); // Clear the input after saving
     } catch (error) {
@@ -43,7 +41,7 @@ function ServicesTypes() {
     if (!updatedTourName) return;
 
     try {
-      const response = await axios.put(`${apiUrl}/tours/${id}`, { tourName: updatedTourName });
+      const response = await axios.put(`${process.env.REACT_APP_API}/tours/${id}`, { tourName: updatedTourName });
       setTourTypes(tourTypes.map(tour => (tour._id === id ? response.data : tour)));
     } catch (error) {
       console.error('Error updating tour type:', error);
@@ -54,7 +52,7 @@ function ServicesTypes() {
     if (!window.confirm('Are you sure you want to delete this tour?')) return;
 
     try {
-      await axios.delete(`${apiUrl}/tours/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API}/tours/${id}`);
       setTourTypes(tourTypes.filter(tour => tour._id !== id));
     } catch (error) {
       console.error('Error deleting tour type:', error);

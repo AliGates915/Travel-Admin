@@ -12,17 +12,18 @@ const Datatable = ({ columns, hotelId }) => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const apiUrl = process.env.REACT_APP_API;
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         // Log the API URL for debugging
-        console.log("Fetching data from:", `${apiUrl}/${path}`);
+        console.log("Fetching data from:", `${process.env.REACT_APP_API}/${path}`);
         
-        const res = await axios.get(`${apiUrl}/${path}`);
+        const res = await axios.get(`${process.env.REACT_APP_API}/${path}`);
         setList(res.data);
+        console.log("Data: ",res.data);
+        
       } catch (err) {
         // Log the error details
         console.error("Error fetching data:", err.response ? err.response.data : err.message);
@@ -32,14 +33,14 @@ const Datatable = ({ columns, hotelId }) => {
       }
     };
     fetchData();
-  }, [apiUrl, path]);
+  }, [path]);
 
   const handleDelete = async (id) => {
     try {
       const url =
         path === "rooms"
-          ? `${apiUrl}/${path}/${id}/${hotelId}`
-          : `${apiUrl}/${path}/${id}`;
+          ? `${process.env.REACT_APP_API}/${path}/{id}/{hotelId}`
+          : `${process.env.REACT_APP_API}/${path}/{id}`;
       await axios.delete(url);
 
       // Update the state to remove the deleted item

@@ -20,7 +20,7 @@ function PackagesTypes() {
     // console.log("Data to send to backend:", dataToSend);
   
     try {
-      const response = await axios.post(`${apiUrl}/packages`, dataToSend);
+      const response = await axios.post(`${process.env.REACT_APP_API}/packages`, dataToSend);
       // console.log("Saved packages response:", response.data);
       // Check if response.data is a valid package object before updating state
       if (response.data && response.data._id) {
@@ -44,7 +44,7 @@ function PackagesTypes() {
 
   const fetchPackageTypes = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/packages`);
+      const response = await axios.get(`${process.env.REACT_APP_API}/packages`);
       setPackageTypes(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching packages types:", error);
@@ -56,7 +56,7 @@ function PackagesTypes() {
     if (!updatedPackageName) return;
   
     try {
-      const response = await axios.put(`${apiUrl}/packages/${id}`, {
+      const response = await axios.put(`${process.env.REACT_APP_API}/packages/${id}`, {
         packageName: updatedPackageName,
       });
       // Only update the state if response contains updated package data
@@ -81,7 +81,7 @@ function PackagesTypes() {
       return;
 
     try {
-      await axios.delete(`/packages/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API}/packages/${id}`);
       setPackageTypes(packageTypes.filter((packages) => packages._id !== id));
     } catch (error) {
       if (error.response && error.response.status === 401) {
