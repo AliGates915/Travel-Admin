@@ -14,8 +14,6 @@ const NewHotel = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = process.env.REACT_APP_API;
-
   // Fetch rooms data using Axios
   useEffect(() => {
     const fetchRooms = async () => {

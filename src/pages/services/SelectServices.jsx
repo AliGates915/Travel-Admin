@@ -8,7 +8,7 @@ function SelectServices() {
   const [isOpenCustomer, setIsOpenCustomer] = useState(false);
   const [isOpenServiceType, setIsOpenServiceType] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const apiUrl = process.env.REACT_APP_API;
+ 
   const services = [
     'Web Development',
     'Mobile App Development',

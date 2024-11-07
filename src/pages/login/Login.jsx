@@ -23,7 +23,7 @@ const Login = () => {
     dispatch({ type: "LOGIN_START" });
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}/auth/login`, credentials, {    
+      const res = await axios.post(`${process.env.REACT_APP_API}/auth/login`, credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -31,8 +31,11 @@ const Login = () => {
       });
 
       console.log("Full response data:", res.data);
-      
+
       if (res.data.isAdmin) {
+        // Save the token in localStorage
+        localStorage.setItem("token", res.data.token);
+
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
         navigate("/");
       } else {
@@ -42,10 +45,8 @@ const Login = () => {
         });
       }
     } catch (err) {
-      // Here, we can handle different error messages based on the backend response
       let errorMessage = "Network error";
       if (err.response) {
-        // Customize the error message based on the server's response
         errorMessage = err.response.data.error || err.response.data.message || "Login failed. Please try again.";
       }
       dispatch({ type: "LOGIN_FAILURE", payload: { message: errorMessage } });

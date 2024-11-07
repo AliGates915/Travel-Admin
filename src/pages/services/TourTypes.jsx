@@ -8,7 +8,6 @@ function TourTypes() {
   const [tourName, setTourName] = useState('');
   const [tourTypes, setTourTypes] = useState([]);
   const navigate = useNavigate();
-  const apiUrl = process.env.REACT_APP_API;
   const handleSave = async () => {
     if (!tourName) {
       alert('Please enter a tour name.');
@@ -50,7 +49,7 @@ function TourTypes() {
     if (!updatedTourName) return;
 
     try {
-      const response = await axios.put(`${apiUrl}/tours/${id}`, { tourName: updatedTourName });
+      const response = await axios.put(`${process.env.REACT_APP_API}/tours/${id}`, { tourName: updatedTourName });
       setTourTypes(tourTypes.map(tour => (tour._id === id ? response.data : tour)));
     } catch (error) {
       if (error.response && error.response.status === 401) {

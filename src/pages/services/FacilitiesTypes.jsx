@@ -19,7 +19,7 @@ function FacilitiesTypes() {
   const closeDropdowns = () => {
     setIsTourTypeDropdownOpen(false);
   };
-  const apiUrl = process.env.REACT_APP_API;
+  
   useEffect(() => {
     fetchTourTypes();
     fetchFacilityTypes();

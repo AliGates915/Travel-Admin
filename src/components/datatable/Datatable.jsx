@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ClipLoader } from "react-spinners";
 
 const Datatable = ({ columns, hotelId }) => {
   const location = useLocation();
@@ -17,15 +18,11 @@ const Datatable = ({ columns, hotelId }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Log the API URL for debugging
         console.log("Fetching data from:", `${process.env.REACT_APP_API}/${path}`);
-        
         const res = await axios.get(`${process.env.REACT_APP_API}/${path}`);
         setList(res.data);
-        console.log("Data: ",res.data);
-        
+        console.log("Data: ", res.data);
       } catch (err) {
-        // Log the error details
         console.error("Error fetching data:", err.response ? err.response.data : err.message);
         setError(true);
       } finally {
@@ -39,11 +36,9 @@ const Datatable = ({ columns, hotelId }) => {
     try {
       const url =
         path === "rooms"
-          ? `${process.env.REACT_APP_API}/${path}/{id}/{hotelId}`
-          : `${process.env.REACT_APP_API}/${path}/{id}`;
+          ? `${process.env.REACT_APP_API}/${path}/${id}/${hotelId}`
+          : `${process.env.REACT_APP_API}/${path}/${id}`;
       await axios.delete(url);
-
-      // Update the state to remove the deleted item
       setList(list.filter((item) => item._id !== id));
       alert("Delete successful");
     } catch (err) {
@@ -73,11 +68,15 @@ const Datatable = ({ columns, hotelId }) => {
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loadingContainer">
+        <ClipLoader size={50} color={"#123abc"} loading={loading} />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error loading data. Please try again later.</div>;
+    return <div className="errorContainer">Error loading data. Please try again later.</div>;
   }
 
   return (
@@ -85,7 +84,7 @@ const Datatable = ({ columns, hotelId }) => {
       <div className="datatableTitle">
         All {path}
         <Link to={`/${path}/new`} className="link">
-          Add New User
+          Add New {path}
         </Link>
       </div>
       <DataGrid

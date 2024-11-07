@@ -76,3 +76,15 @@
     }
   }
 }
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; // Adjust based on your layout
+}
+
+.errorContainer {
+  text-align: center;
+  color: red;
+  padding: 20px;
+}

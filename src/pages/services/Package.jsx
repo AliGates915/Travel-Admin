@@ -7,7 +7,6 @@ function PackagesTypes() {
   const [packageName, setPackageName] = useState("");
   const [packageTypes, setPackageTypes] = useState([]);
  
-  const apiUrl = process.env.REACT_APP_API;
   const handleSave = async () => {
     if (!packageName) {
       alert("Please fill in all fields.");
@@ -17,12 +16,9 @@ function PackagesTypes() {
       packageName,
     };
   
-    // console.log("Data to send to backend:", dataToSend);
-  
     try {
       const response = await axios.post(`${process.env.REACT_APP_API}/packages`, dataToSend);
-      // console.log("Saved packages response:", response.data);
-      // Check if response.data is a valid package object before updating state
+     
       if (response.data && response.data._id) {
         setPackageTypes([...packageTypes, response.data]);
       } else {

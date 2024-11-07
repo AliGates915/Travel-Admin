@@ -26,7 +26,6 @@ function PackageList() {
   const tourDropdownRef = useRef(null);
   const facilitiesDropdownRef = useRef(null);
 
-  const apiUrl = process.env.REACT_APP_API;
   useEffect(() => {
     fetchPackages();
     fetchTourTypes();

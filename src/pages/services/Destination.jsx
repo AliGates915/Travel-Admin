@@ -12,7 +12,7 @@ function Designation() {
   useEffect(() => {
     fetchDestinations();
   }, []);
-  const apiUrl = process.env.REACT_APP_API;
+  
   const fetchDestinations = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API}/destination`);
